@@ -1,18 +1,15 @@
-import { Controller, Get, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { PdfService } from './pdf.service';
 import { Response } from 'express';
+import { CertificateDto } from './dtos/certificate.dto';
 
 @Controller('pdf')
 export class PdfController {
   constructor(private readonly pdfService: PdfService) {}
 
-  @Get('test')
-  async getPdf(@Res() res: Response) {
-    const pdfBuffer = await this.pdfService.generateCertificatePdf({
-      recipientName: 'Charlotte Smith',
-      eventName: 'Local Chess Tournament 2025',
-      issueDate: 'May 29, 2025',
-    });
+  @Post('')
+  async create(@Body() data: CertificateDto, @Res() res: Response) {
+    const pdfBuffer = await this.pdfService.generateCertificatePdf(data);
 
     res.set({
       'Content-Type': 'application/pdf',
