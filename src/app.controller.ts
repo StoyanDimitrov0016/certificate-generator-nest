@@ -1,17 +1,11 @@
-import { Controller, Get, Render } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Res } from '@nestjs/common';
+import { Response } from 'express';
+import { join } from 'path';
 
 @Controller()
 export class AppController {
-  constructor() {}
-
   @Get()
-  @Render('certificate')
-  getCertificate() {
-    return {
-      recipientName: 'Charlotte Smith',
-      eventName: 'Local Chess Tournament 2025',
-      issueDate: 'May 29, 2025',
-    };
+  async redirectToStatic(@Res() res: Response) {
+    res.sendFile(join(__dirname, '..', '..', 'public', 'index.html'));
   }
 }
