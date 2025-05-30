@@ -1,0 +1,103 @@
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8' />
+  <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <meta name='description' content='Generate custom certificates instantly with our Certificate Generator.' />
+
+  <title>Certificate Generator</title>
+  <link rel='icon' type='image/x-icon' href='favicon.svg' />
+  <link rel="stylesheet" href="/reset.css">
+  <link rel="stylesheet" href="/layout.css">
+  <script src="/script.js" defer></script>
+
+</head>
+
+<body>
+  <div class='app-container'>
+    <header>
+      <h1>PDF Certificate Generator</h1>
+    </header>
+    <main>
+      <section>
+        <form action='/pdf/generate' method='post'>
+          <fieldset>
+            <legend>Certificate Configuration</legend>
+            <div class='form-group'>
+              <label for='organizationName'>Organization Name:</label>
+              <input type='text' id='organizationName' name='organizationName' required />
+            </div>
+
+            <div class='form-group'>
+              <label for='certificateTitle'>Certificate Title:</label>
+              <input type='text' name='certificateTitle' id='certificateTitle' />
+            </div>
+
+            <div class='form-group'>
+              <label for='certificateSubtitle'>Certificate Subtitle:</label>
+              <input type='text' name='certificateSubtitle' id='certificateSubtitle' />
+            </div>
+
+            <div class='form-group'>
+              <label for='presentationText'>Presentation Text:</label>
+              <input type='text' name='presentationText' id='presentationText' />
+            </div>
+
+            <div class='form-group'>
+              <label for='recipientName'>Recipient Name:</label>
+              <input type='text' name='recipientName' id='recipientName' />
+            </div>
+
+            <div class='form-group'>
+              <label for='achievementText'>Achievement Text:</label>
+              <input type='text' name='achievementText' id='achievementText' />
+            </div>
+
+            <div class='form-group'>
+              <label for='courseTitle'>Course Title:</label>
+              <input type='text' name='courseTitle' id='courseTitle' />
+            </div>
+
+            <div class='form-group'>
+              <label for='completionDate'>Completion Date:</label>
+              <input type='date' id='completionDate' name='completionDate' />
+            </div>
+
+            <div class='form-group'>
+              <label for='signatureName'>Signature Name:</label>
+              <input type='text' name='signatureName' id='signatureName' />
+            </div>
+
+            <div class='form-group'>
+              <label for='signatureLabel'>Signature Label:</label>
+              <input type='text' name='signatureLabel' id='signatureLabel' />
+            </div>
+
+            <div class='form-group'>
+              <label for='issueDate'>Issue Date:</label>
+              <input type='date' name='issueDate' id='issueDate' />
+            </div>
+
+            <div class='form-actions'>
+              <button type='submit'>Generate Certificate</button>
+            </div>
+
+          </fieldset>
+        </form>
+
+      </section>
+    </main>
+    <footer>
+      <ul>
+        <li><span>Certificate Generator</span></li>
+        <li><span>&copy; <span id='yearRange'></span></span></li>
+        <li><span>by Stoyan Dimitrov</span></li>
+      </ul>
+    </footer>
+
+  </div>
+
+</body>
+
+</html>
