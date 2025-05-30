@@ -21,6 +21,13 @@ export class PdfService {
     const pdfUint8Array = await page.pdf({
       format: 'A4',
       printBackground: true,
+      margin: {
+        top: '0mm',
+        right: '0mm',
+        bottom: '0mm',
+        left: '0mm',
+      },
+      preferCSSPageSize: true,
     });
 
     await browser.close();
