@@ -7,7 +7,7 @@ import { CertificateDto } from './dtos/certificate.dto';
 export class PdfController {
   constructor(private readonly pdfService: PdfService) {}
 
-  @Post('')
+  @Post('/generate')
   async create(@Body() data: CertificateDto, @Res() res: Response) {
     const pdfBuffer = await this.pdfService.generateCertificatePdf(data);
 
