@@ -1,38 +1,64 @@
-import { Injectable } from '@nestjs/common';
-import * as fs from 'fs';
+import {
+  Injectable,
+  OnModuleInit,
+  OnModuleDestroy,
+  BadRequestException,
+} from '@nestjs/common';
+import * as fsPromises from 'fs/promises';
 import * as path from 'path';
-import handlebars from 'handlebars';
-import puppeteer from 'puppeteer';
+import handlebars, { TemplateDelegate } from 'handlebars';
+import puppeteer, { Browser, Page } from 'puppeteer';
 import { CertificateDto } from './dtos/certificate.dto';
+import { TEMPLATE_THEMES, type TemplateTheme } from 'src/constants';
 
 @Injectable()
-export class PdfService {
+export class PdfService implements OnModuleInit, OnModuleDestroy {
+  private browser: Browser;
+  private templates = new Map<
+    TemplateTheme,
+    TemplateDelegate<CertificateDto>
+  >();
+
+  async onModuleInit() {
+    this.browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      headless: true,
+    });
+
+    await Promise.all(
+      TEMPLATE_THEMES.map(async (theme) => {
+        const interpolated = `../../views/certificate-${theme}.hbs`;
+        const filePath = path.join(__dirname, interpolated);
+
+        const template = await fsPromises.readFile(filePath, 'utf-8');
+        this.templates.set(theme, handlebars.compile<CertificateDto>(template));
+      }),
+    );
+  }
+
+  async onModuleDestroy() {
+    if (this.browser) await this.browser.close();
+  }
+
   async generateCertificatePdf(data: CertificateDto): Promise<Buffer> {
-    const templatePath = path.join(__dirname, '../../views/certificate.hbs');
-    const templateSource = fs.readFileSync(templatePath, 'utf-8');
+    const page: Page = await this.browser.newPage();
 
-    const templateHandler = handlebars.compile(templateSource);
-    const html = templateHandler(data);
+    const htmlHandler = this.templates.get(data.theme);
+    if (!htmlHandler) {
+      throw new BadRequestException('Invalid certificate theme.');
+    }
 
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
+    const html = htmlHandler(data);
     await page.setContent(html, { waitUntil: 'networkidle0' });
 
-    const pdfUint8Array = await page.pdf({
+    const pdfBuffer = await page.pdf({
       format: 'A4',
       printBackground: true,
-      margin: {
-        top: '0mm',
-        right: '0mm',
-        bottom: '0mm',
-        left: '0mm',
-      },
+      margin: { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' },
       preferCSSPageSize: true,
     });
 
-    await browser.close();
-
-    const pdfBuffer = Buffer.from(pdfUint8Array);
-    return pdfBuffer;
+    await page.close();
+    return Buffer.from(pdfBuffer);
   }
 }
