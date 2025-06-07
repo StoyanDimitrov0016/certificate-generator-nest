@@ -145,35 +145,6 @@
         right: 100px;
       }
 
-      /* Seal */
-      .seal {
-        position: absolute;
-        top: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90px;
-        height: 90px;
-        border: 4px solid #000;
-        border-radius: 50%;
-        background: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-        color: #000;
-        font-weight: 900;
-        z-index: 5;
-      }
-
-      .seal::before {
-        content: '';
-        position: absolute;
-        width: 70px;
-        height: 70px;
-        border: 2px solid #333;
-        border-radius: 50%;
-      }
-
       /* Typography */
       .organization {
         text-align: center;
@@ -407,8 +378,6 @@
         <!-- Flourishes -->
         <div class='flourish top-center'>❦</div>
         <div class='flourish bottom-center'>❦</div>
-
-        <div class='seal'>★</div>
 
         <div class='organization'>{{organizationName}}</div>
         <h1>{{certificateTitle}}</h1>
