@@ -1,21 +1,26 @@
-import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Controller, Post, Body, Header } from '@nestjs/common';
+import { StreamableFile } from '@nestjs/common';
 import { PdfService } from './pdf.service';
-import { Response } from 'express';
 import { CertificateDto } from './dtos/certificate.dto';
 
 @Controller('pdf')
 export class PdfController {
   constructor(private readonly pdfService: PdfService) {}
 
-  @Post('/generate')
-  async create(@Body() data: CertificateDto, @Res() res: Response) {
+  @Post('generate')
+  @Header('Content-Type', 'application/pdf')
+  async create(@Body() data: CertificateDto): Promise<StreamableFile> {
     const pdfBuffer = await this.pdfService.generateCertificatePdf(data);
 
-    res.set({
-      'Content-Type': 'application/pdf',
-      'Content-Disposition': 'attachment; filename="certificate.pdf"',
-    });
+    const name = data.recipientName
+      .slice(0, 30)
+      .toLowerCase()
+      .replace(/\s+/g, '_');
+    const filename = `certificate_${name}_${data.theme}.pdf`;
 
-    res.send(pdfBuffer);
+    return new StreamableFile(pdfBuffer, {
+      type: 'application/pdf',
+      disposition: `attachment; filename="${filename}"`,
+    });
   }
 }
