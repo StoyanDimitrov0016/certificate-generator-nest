@@ -10,6 +10,8 @@ This is a web-based PDF Certificate Generator built with **NestJS**, **Handlebar
 - Static homepage with live form
 - Puppeteer-powered PDF export
 - Built-in field validation via class-validator
+- Support for three certificate themes: **colorful**, **monochrome**, and **dark**
+- Dynamic download filename suggestion based on recipient name and selected theme
 
 ## 🧰 Tech Stack
 
@@ -34,10 +36,8 @@ npm run start:dev
 ## 🧾 Generate a certificate
 
 1. Open the homepage form (Visit: http://localhost:3000)
-
-2. Fill in the details
-
-3. Submit and wait to download a styled PDF
+2. Fill in the details, including selecting one of the three themes
+3. Submit and wait to download a styled PDF (filename will be auto-generated as `certificate_<recipient>_<theme>.pdf`)
 
 ## 📁 Output
 
