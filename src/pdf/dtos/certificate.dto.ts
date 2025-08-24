@@ -1,11 +1,11 @@
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { TemplateTheme, TEMPLATE_THEMES } from '../../constants';
+import { type TemplateTheme, TEMPLATE_THEMES_LIST } from '../../constants';
 
 export class CertificateDto {
   @IsString()
   @IsNotEmpty()
-  @IsEnum(TemplateTheme, {
-    message: `theme must be one of the following values: ${TEMPLATE_THEMES.join(', ')}`,
+  @IsEnum(TEMPLATE_THEMES_LIST, {
+    message: `Theme must be one of the following values: ${TEMPLATE_THEMES_LIST.join(', ')}`,
   })
   theme: TemplateTheme;
 
