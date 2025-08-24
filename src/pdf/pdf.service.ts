@@ -9,7 +9,7 @@ import * as path from 'path';
 import handlebars, { TemplateDelegate } from 'handlebars';
 import puppeteer, { Browser, Page } from 'puppeteer';
 import { CertificateDto } from './dtos/certificate.dto';
-import { TEMPLATE_THEMES, type TemplateTheme } from 'src/constants';
+import { TEMPLATE_THEMES_LIST, type TemplateTheme } from 'src/constants';
 
 @Injectable()
 export class PdfService implements OnModuleInit, OnModuleDestroy {
@@ -26,7 +26,7 @@ export class PdfService implements OnModuleInit, OnModuleDestroy {
     });
 
     await Promise.all(
-      TEMPLATE_THEMES.map(async (theme) => {
+      TEMPLATE_THEMES_LIST.map(async (theme) => {
         const interpolated = `../../views/certificate-${theme}.hbs`;
         const filePath = path.join(__dirname, interpolated);
 
@@ -40,15 +40,15 @@ export class PdfService implements OnModuleInit, OnModuleDestroy {
     if (this.browser) await this.browser.close();
   }
 
-  async generateCertificatePdf(data: CertificateDto): Promise<Buffer> {
+  async createCertificate(certificateDto: CertificateDto): Promise<Buffer> {
     const page: Page = await this.browser.newPage();
 
-    const htmlHandler = this.templates.get(data.theme);
+    const htmlHandler = this.templates.get(certificateDto.theme);
     if (!htmlHandler) {
       throw new BadRequestException('Invalid certificate theme.');
     }
 
-    const html = htmlHandler(data);
+    const html = htmlHandler(certificateDto);
     await page.setContent(html, { waitUntil: 'networkidle0' });
 
     const pdfBuffer = await page.pdf({
