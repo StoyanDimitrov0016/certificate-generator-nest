@@ -2,7 +2,9 @@ import { Controller, Get, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { join } from 'path';
 import { AppService } from './app.service';
+import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('System')
 @Controller()
 export class AppController {
   rootPath: string = join(__dirname, '..', 'public');
@@ -10,6 +12,7 @@ export class AppController {
 
   constructor(private readonly appService: AppService) {}
 
+  @ApiExcludeEndpoint()
   @Get()
   root(@Res() res: Response) {
     return res.sendFile(this.htmlName, { root: this.rootPath });

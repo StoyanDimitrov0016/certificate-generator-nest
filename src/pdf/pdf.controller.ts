@@ -1,15 +1,25 @@
-import { Controller, Post, Body, Header } from '@nestjs/common';
+import { Controller, Post, Body, Header, HttpCode } from '@nestjs/common';
 import { StreamableFile } from '@nestjs/common';
+import { ApiOkResponse, ApiProduces, ApiTags } from '@nestjs/swagger';
 import { PdfService } from './pdf.service';
 import { CertificateDto } from './dtos/certificate.dto';
 import { TemplateTheme } from 'src/constants';
 
+@ApiTags('PDF')
 @Controller('pdf')
 export class PdfController {
   constructor(private readonly pdfService: PdfService) {}
 
   @Post('generate')
+  @HttpCode(200)
   @Header('Content-Type', 'application/pdf')
+  @ApiProduces('application/pdf')
+  @ApiOkResponse({
+    description: 'PDF file',
+    content: {
+      'application/pdf': { schema: { type: 'string', format: 'binary' } },
+    },
+  })
   async create(
     @Body() certificateDto: CertificateDto,
   ): Promise<StreamableFile> {
@@ -25,7 +35,11 @@ export class PdfController {
   }
 
   private getFilename(recipientName: string, theme: TemplateTheme) {
-    const name = recipientName.slice(0, 30).toLowerCase().replace(/\s+/g, '_');
+    const name = recipientName
+      .slice(0, 30)
+      .toLowerCase()
+      .replace(/\s+/g, '_')
+      .replace(/[^a-z0-9_]/g, '');
     return `certificate_${name}_${theme}.pdf`;
   }
 }
