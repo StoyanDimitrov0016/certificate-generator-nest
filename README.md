@@ -12,6 +12,7 @@ This is a web-based PDF Certificate Generator built with **NestJS**, **Handlebar
 - Built-in field validation via class-validator
 - Support for three certificate themes: **colorful**, **monochrome**, and **dark**
 - Dynamic download filename suggestion based on recipient name and selected theme
+- Swagger/OpenAPI docs available at [`/docs`](http://localhost:3000/docs)
 
 ## 🧰 Tech Stack
 
@@ -20,6 +21,7 @@ This is a web-based PDF Certificate Generator built with **NestJS**, **Handlebar
 - **Styling**: CSS (custom + reset)
 - **Validation**: class-validator + ValidationPipe
 - **Frontend Form**: Static HTML served via Nest
+- **Swagger/OpenAPI**: [NestJS OpenAPI (Swagger)](https://docs.nestjs.com/openapi/introduction)
 
 ### 📦 Install dependencies
 
@@ -42,6 +44,22 @@ npm run start:dev
 ## 📁 Output
 
 Certificates are returned as downloadable PDFs.
+
+## 🖼️ Certificate Examples
+
+## 🖼️ Certificate Examples
+
+### Colorful
+
+[<img src="./certificate-examples/colorful.png" width="400">](./certificate-examples/certificate_alexander_jonathan_colorful.pdf)
+
+### Dark
+
+[<img src="./certificate-examples/dark.png" width="400">](./certificate-examples/certificate_alexander_jonathan_dark.pdf)
+
+### Monochrome
+
+[<img src="./certificate-examples/monochrome.png" width="400">](./certificate-examples/certificate_alexander_jonathan_monochrome.pdf)
 
 ## 👨‍💻 Author
 
