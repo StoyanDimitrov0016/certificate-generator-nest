@@ -47,19 +47,17 @@ Certificates are returned as downloadable PDFs.
 
 ## 🖼️ Certificate Examples
 
-## 🖼️ Certificate Examples
-
 ### Colorful
 
-[<img src="./certificate-examples/colorful.png" width="400">](./certificate-examples/certificate_alexander_jonathan_colorful.pdf)
+- [Click here to open Colorful](./certificate-examples/certificate_alexander_jonathan_colorful.pdf)
 
 ### Dark
 
-[<img src="./certificate-examples/dark.png" width="400">](./certificate-examples/certificate_alexander_jonathan_dark.pdf)
+- [Click here to open Dark](./certificate-examples/certificate_alexander_jonathan_dark.pdf)
 
 ### Monochrome
 
-[<img src="./certificate-examples/monochrome.png" width="400">](./certificate-examples/certificate_alexander_jonathan_monochrome.pdf)
+- [Click here to open Monochrome](./certificate-examples/certificate_alexander_jonathan_monochrome.pdf)
 
 ## 👨‍💻 Author
 
