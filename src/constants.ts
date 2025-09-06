@@ -1,3 +1,6 @@
+// * Note:
+// *  The template map values are used as the Handlebars template suffix:
+// *  views/certificate-<theme>.hbs
 export const TEMPLATE_THEMES_MAP = {
   COLORFUL: 'colorful',
   DARK: 'dark',
